@@ -1,0 +1,82 @@
+---
+title: "Class Demo document"
+author: "Kyle Thayer"
+format: html
+---
+
+## Trying out some formatting
+
+Let's see if I can make text **Bold**
+
+How about *italics*
+
+If I write text here and make it **Bold**, *Italics*, or ***both***, I can see how to do it.
+
+### Test some lists
+
+An unordered list of ingredients:
+
+-   flour
+-   butter
+-   sugar
+    -   Note: this will be brown sugar
+-   etc.
+
+An ordered list
+
+1.  melt butter
+2.  mix ingredients
+3.  bake
+
+## Code examples
+
+First I am going to save some values in variables
+
+```{r}
+num_students_201 <- 198
+num_openings_201 <- 200
+
+open_slots <- num_openings_201 - num_students_201
+```
+
+I am teaching INFO 201. There are currently `r num_students_201` students registered out of `r num_openings_201` open spots for the class. That means, `r open_slots` more students could sign up.
+
+
+## Example of code with National Park dataset
+Step 1: Load National Park data and Dplyr
+```{r}
+#| warnings: hidden
+#| messages: hidden
+
+library(dplyr)
+
+# Load a dataset of the top 5 national parks by visits
+
+np_top_5_df <- read.csv("https://raw.githubusercontent.com/melaniewalsh/Neat-Datasets/refs/heads/main/2020-National-Park-Visits-By-State-Top5.csv")
+
+```
+
+Step 2: Get values from the dataset
+```{r}
+
+# Note: Pipe takes the results from before and makes them the first argument of the next function
+# eg. np_top_5_df |> nrow()
+#   is the same as nrow(np_top_5_df)
+# or np_top_5_df |> pull(RecreationVisits)
+#   is the same as pull(np_top_5_df, RecreationVisits)
+
+# number of parks in my dataset
+num_parks <- nrow(np_top_5_df)
+
+total_visits <- np_top_5_df |>
+                pull(RecreationVisits) |>
+                sum()
+
+avg_visits <- np_top_5_df |>
+              pull(RecreationVisits) |>
+              mean() |>
+              round()
+
+```
+
+We looked at the top `r num_parks` National Parks. Those parks had a total of `r total_visits` different visits. And those parks together had an average of `r avg_visits` visits.
