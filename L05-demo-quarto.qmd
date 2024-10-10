@@ -1,0 +1,53 @@
+---
+title: "Demo quarto doc saving"
+author: "Kyle Thayer"
+format:
+  html:
+    embed-resources: true
+---
+
+Load libraries: (Note: I think I finally got this to not show the extra messages when loading the libraries!)
+```{r}
+#| warning: false
+
+# load dplyr and ggplot2 library
+library("dplyr")
+library("ggplot2")
+```
+
+Load dataset and find some averages:
+
+```{r}
+fake_student_df <- read.csv("https://raw.githubusercontent.com/kylethayer/Info-201-au-24-datasets/refs/heads/main/demo_L03_fake_students.csv")
+
+
+# multistep pipe to find averages
+avg_student_num <- 
+  fake_student_df |> 
+    pull(student_num) |> 
+    mean()
+
+avg_student_final <- 
+  fake_student_df |> 
+    pull(final_exam_score) |> 
+    mean(na.rm = TRUE)
+
+avg_student_final_with_0s <- mean(72, 93, 87, 0, 54)
+
+```
+
+The average student number is `r avg_student_num`. The average final exam score (for students who showed up) was `r avg_student_final`. But the final exam score if I count students who didn't show up as getting 0s is `r avg_student_final_with_0s`.
+
+## Example graph:
+```{r}
+
+
+midwest <- midwest
+
+#scatter plot of points with x/y axis based on college degrees
+# and poverty
+ggplot(data = midwest) +
+  geom_point(mapping = aes(x = percollege, y = percadultpoverty))
+
+```
+
