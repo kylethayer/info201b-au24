@@ -1,0 +1,36 @@
+---
+title: "Lecture 9: review demo"
+format: html
+---
+
+## Try doing filter and summarize on a dataframe
+load dplyr and get pocket dataframe
+```{r}
+library(dplyr)
+library(stringr)
+pocket_df <- read.csv("https://github.com/the-pudding/data/raw/master/pockets/measurements.csv")
+```
+
+Now try to filter for all pants that have polyester, and then find the average price. Method 1: not using summarize
+```{r}
+avg_price_polyester <- 
+  pocket_df |>
+  filter(str_detect(fabric, "polyester")) |>
+  pull(price) |>
+  mean()
+```
+
+Example paragraph here. The average price of all pants with polyester is $`r round(avg_price_polyester)`.
+
+If I wanted to purchase one of each of the non-polyester pants, how much would it cost? Method 2: use summarize
+```{r}
+total_non_polyester_price <-   
+  pocket_df |>
+  filter(!str_detect(fabric, "polyester")) |>
+  summarize(total_cost = sum(price)) |>
+  pull(total_cost) # This gets the total_cost out of a dataframe
+```
+(Note: there are data issues where polyester is sometimes abbreviated as "poly")
+
+I can't display directly a dataframe with multiple values (sometimes made by summarize). Total cost of all non-polyester pants (rounded) is $`r total_non_polyester_price`.
+
