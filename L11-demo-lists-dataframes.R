@@ -36,3 +36,31 @@ np_data_df <- data.frame(
   visits = c(30885, 2499177, 1160754)
 )
 
+
+# Dataframe join example:
+library(dplyr)
+library_df <- data.frame(
+  library_id = c(1, 2, 3, 4, 5),
+  title = c("Pride and Prejudice", "Parable of the Sower", "Parable of the Sower", "The Dawn of Everything", "The Dawn of Everything"),
+  checked_out = c(FALSE, TRUE, TRUE, FALSE, TRUE)
+)
+
+authors_df <- data.frame(
+  title = c("Ficciones", "The Dawn of Everything", "The Dawn of Everything", "Parable of the Sower"),
+  auth_first_name = c("Jorge Luis", "David", "David", "Octavia E."),
+  auth_last_name = c("Borges", "Graeber", "Wengrow", "Butler")
+)
+
+inner_join_df <- 
+  inner_join(library_df, authors_df, join_by(title))
+
+left_join_df <-
+  left_join(library_df, authors_df, join_by(title))
+
+right_join_df <-
+  right_join(library_df, authors_df, join_by(title))
+
+full_join_df <-
+  full_join(library_df, authors_df, join_by(title))
+
+
